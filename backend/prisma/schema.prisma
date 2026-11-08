@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Incident {
+  id               String   @id @default(uuid())
+  title            String
+  severity         String
+  riskScore        Int
+  confidence       Int
+  status           String   @default("NEW")
+  source           String?
+  target           String?
+  description      String?
+  mitreTechniques  String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  alerts           Alert[]
+}
+
+model Alert {
+  id               String   @id @default(uuid())
+  wazuhId          String?  @unique
+  severity         String
+  timestamp        DateTime
+  ruleId           String?
+  description      String?
+  sourceIp         String?
+  targetIp         String?
+  mitreTechnique   String?
+  rawEvent         Json?
+
+  incidentId       String?
+  incident         Incident? @relation(fields: [incidentId], references: [id])
+
+  createdAt        DateTime @default(now())
+}
+
+model Asset {
+  id               String   @id @default(uuid())
+  type             String   // ENDPOINT, USER, SERVER
+  name             String
+  ip               String?
+  os               String?
+  criticality      String   // LOW, MEDIUM, HIGH, CRITICAL
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

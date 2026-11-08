@@ -1,0 +1,41 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local databases and data
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary backups
+*.bak
+*.bak-*
+*.backup
+
+# Local debugging and diagnostic scripts
+backend/debug*.ts
+backend/test-*.ts
+backend/src/test-*.ts
+
+# All source backups
+*-backup
